@@ -8,9 +8,11 @@ describe('Signup', () => {
             password: 'pwd123'
         } 
 
-        cy.deleteMany({instagram: user.instagram},{collection: 'users'}).then(res => { // defaults to collection and database from env variables
+        /*cy.deleteMany({instagram: user.instagram},{collection: 'users'}).then(res => { // defaults to collection and database from env variables
             cy.log(res); // prints '# documents deleted'
-        })
+        })*/
+
+        cy.apiResetUser(user.instagram)
 
         signupPage.go()
         signupPage.form(user)
@@ -18,6 +20,22 @@ describe('Signup', () => {
 
         signupPage.modal.haveText('Agora você pode recomendar e/ou avaliar Food trucks.')
        
+    })
+
+    it('não deve cadastrar com instagram duplicado', ()=> {
+        const user = {
+            name: 'Érick Jacquin',
+            instagram: '@jacquin',
+            password: 'pwd123'
+        }
+
+        cy.apiCreateUser(user)
+
+        signupPage.go()
+        signupPage.form(user)
+        signupPage.submit()
+
+        signupPage.modal.haveText('Instagram já cadastrado!')
     })
     
 })
