@@ -35,10 +35,7 @@ describe('Recomendação', () => {
     })
 
     it('não deve cadastrar foodtruck com o nome duplicado', () => {
-        // 1 - a massa de testes deve ser independentes
-        // 2 - latitude e longitude deve ser única
-        // 3 - você deve encontrar e corrigir o bug nesse cenário
-        
+       
         const user = {
             name: 'Benson',
             instagram: '@benson',
@@ -55,7 +52,6 @@ describe('Recomendação', () => {
 
         }
 
-        //cy.apiCreateUser(user)
         cy.uiLogin(user)       
 
         mapPage.createLink()
