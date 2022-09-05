@@ -20,6 +20,23 @@ class LoginPage{
     submit(){
         cy.contains('button', 'Entrar').click()
     }
+
+    goToSignup() {
+        cy.contains('a', 'Cadastre-se').click()
+    }
+
+    mockLocation(latitude, longitude) {
+        return {
+            onBeforeLoad(win) {
+                cy.stub(win.navigator.geolocation, "getCurrentPosition").callsFake((cb, err) => {
+                    if (latitude && longitude) {
+                        return cb({ coords: { latitude, longitude } })
+                    }
+                    throw err({ code: 1 })
+                });
+            }
+        }
+    }
 }
 
 export default new LoginPage()
